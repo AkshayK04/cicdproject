@@ -1,0 +1,225 @@
+Step-by-Step CI/CD Pipeline Using GitHub Actions
+
+This guide starts from zero and builds a working CI/CD pipeline.
+
+🧰 Prerequisites
+
+Install:
+
+Git
+Node.js
+Visual Studio Code
+A GitHub account
+🚀 Step 1 — Create Project Folder
+
+Open terminal:
+
+mkdir ci-cd-project
+
+cd ci-cd-project
+🚀 Step 2 — Initialize Node.js Project
+
+Run:
+
+npm init -y
+
+This creates:
+
+package.json
+🚀 Step 3 — Create App File
+
+Create:
+
+app.js
+
+Add:
+
+console.log("CI/CD Pipeline Working");
+🚀 Step 4 — Edit package.json
+
+Open package.json
+
+Replace scripts section with:
+
+"scripts": {
+  "start": "node app.js",
+  "test": "echo Tests Passed"
+}
+
+Final file:
+
+{
+  "name": "ci-cd-project",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo Tests Passed"
+  }
+}
+🚀 Step 5 — Test Locally
+
+Run:
+
+npm start
+
+Output:
+
+CI/CD Pipeline Working
+
+Run test:
+
+npm test
+
+Output:
+
+Tests Passed
+🚀 Step 6 — Initialize Git
+
+Run:
+
+git init
+🚀 Step 7 — Create GitHub Repository
+
+Go to:
+
+GitHub New Repository
+
+Repository name:
+
+ci-cd-project
+
+Click:
+
+Create Repository
+🚀 Step 8 — Connect Local Project to GitHub
+
+Copy commands from GitHub and run:
+
+git add .
+
+git commit -m "first commit"
+
+git branch -M main
+
+git remote add origin YOUR_GITHUB_REPO_URL
+
+git push -u origin main
+
+Example:
+
+git remote add origin https://github.com/yourname/ci-cd-project.git
+🚀 Step 9 — Create GitHub Actions Workflow
+
+Create folders:
+
+mkdir -p .github/workflows
+
+Create file:
+
+.github/workflows/main.yml
+🚀 Step 10 — Add CI/CD Workflow Code
+
+Paste this inside main.yml
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Build Success
+        run: echo "CI Completed Successfully"
+
+  deploy:
+    needs: build-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Step
+        run: echo "Application Deployed Successfully"
+🚀 Step 11 — Push Workflow to GitHub
+
+Run:
+
+git add .
+
+git commit -m "added ci cd pipeline"
+
+git push
+🚀 Step 12 — Watch Pipeline Run
+
+Open your repository on GitHub.
+
+Click:
+
+Actions Tab
+
+You’ll see:
+
+Workflow running
+Green success tick ✅
+Logs for every stage
+📊 What Happens Internally
+Code Push
+   ↓
+GitHub Actions Triggered
+   ↓
+Install Dependencies
+   ↓
+Run Tests
+   ↓
+Deploy Step
+🔥 Step 13 — Make a Change and Test Again
+
+Edit:
+
+console.log("New Update");
+
+Push again:
+
+git add .
+
+git commit -m "updated app"
+
+git push
+
+Pipeline runs automatically again.
+
+✅ Final Project Structure
+ci-cd-project/
+│
+├── app.js
+├── package.json
+│
+└── .github/
+    └── workflows/
+        └── main.yml
+🎯 What You Learned
+
+✅ GitHub Actions
+✅ CI/CD basics
+✅ Automated testing
+✅ Git workflows
+✅ YAML pipelines
+✅ Deployment stages
